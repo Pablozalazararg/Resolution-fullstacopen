@@ -1,12 +1,19 @@
 import { useState } from "react";
 import Note from './components/Note'
-
+import axios from 'axios'
 
 const App = () =>{
   const [persons,setPersons] = useState([{name:'Arto Hellas',number:'111222333'}])
   const [newName,setNewName] = useState('')
   const [number,setNumber] = useState('')
   const [newSearch,setNewSearch] = useState('')
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
   const addName = (e) =>{
     e.preventDefault()
     let flag=0;
