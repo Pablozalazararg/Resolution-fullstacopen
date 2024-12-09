@@ -1,11 +1,13 @@
 import { useState } from "react";
 import noteService from '../service/notes'
+import Notification from './Notification'
 
 
 const PersonForm = ({persons,setPersons}) =>{
   const [newName, setNewName] = useState('')
   
   const [number,setNumber] = useState(0)
+  const [message, setMessage] = useState(null)
   const handleNoteChange = (e) =>{
     setNewName(e.target.value.toString())
   }
@@ -17,6 +19,11 @@ const PersonForm = ({persons,setPersons}) =>{
   let flag = 0
   persons.forEach(element=>{if(element.name===newName){
     flag=1
+    setMessage('ya existe el usuarios')
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+    
   }})
   if(flag==0){
     const noteObject = {
@@ -52,6 +59,7 @@ const PersonForm = ({persons,setPersons}) =>{
         <div>
           <button type="submit">  add  </button>
         </div>
+        <Notification message={message} />
     </form>
   )
 }
