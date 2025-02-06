@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react'
 
 const App = () => {
@@ -14,36 +12,27 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
   
-
   const [selected, setSelected] = useState(0)
-  
-  const handleClick = () =>{
-    let incide = Math.floor(Math.random()*(anecdotes.length-1))
-    console.log(incide)
-    setSelected(incide)
-    
+  const [voto,setVoto] = useState(new Array(anecdotes.length).fill(0))
+  const votar = () =>{
+    const votosTotales = [...voto]
+    votosTotales[selected] +=1;
+    setVoto(votosTotales)
   }
- 
-  const [allClicks, setAll] = useState(new Array(anecdotes.length).fill(0))
-  const handleClickVote = () =>{
-    const copyAllClicks= [...allClicks]
-    copyAllClicks[selected]+=1
-    setAll(copyAllClicks)
-    console.log(allClicks)
+  const aleatoreNumber = () => {
+    setSelected(Math.floor(Math.random() * (anecdotes.length)))
+    console.log(selected)
   }
-  const bestAnecdote = allClicks.indexOf(Math.max(...allClicks))
-  
-
-
   return (
-    <div>
-      {anecdotes[selected]}
-      <button onClick={handleClickVote}>vote</button>
-      <button onClick={handleClick}>next</button>
-      <h1>Anecdote with most votes</h1>
-      <p>{anecdotes[bestAnecdote]}</p>
-    </div>
+    <>
+      <div>
+        {anecdotes[selected]} <b>{voto[selected]} votar</b>
+      </div>
+      <button onClick={votar}>  votar  </button>
+      <button onClick={aleatoreNumber}>  next  </button>
+      <h2>la anecdotas con mayor cantidad de votos</h2>
+      <div>{anecdotes[voto.indexOf(Math.max(...voto))]}</div>
+      
+    </>    
   )
 }
-
-export default App
